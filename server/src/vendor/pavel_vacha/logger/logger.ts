@@ -1,5 +1,5 @@
 /**
- * @name RAY_LOG
+ * @name REY_LOG
  * @author Pavel Vácha
  * @version 0.1
  * @description Pomocná utilita pro logování

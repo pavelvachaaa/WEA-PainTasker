@@ -1,16 +1,34 @@
-import "reflect-metadata"
+import 'express-async-errors';
+import "reflect-metadata";
+import 'dotenv/config'
 
-import express, { Express, Request, Response, Application } from 'express';
+import http from 'http';
 import cors from "cors";
-import logger from './vendor/pavel_vacha/logger/logger';
-import AuthController from "./controllers/auth.controller";
-import { Container } from 'typedi';
+import express, { Request, Response, NextFunction, Express } from 'express';
 
-const app: Application = express();
+import { createHttpTerminator } from 'http-terminator';
+import { errorHandler } from "./vendor/pavel_vacha/exceptions/error_handler";
+import logger from './vendor/pavel_vacha/logger/logger';
+import connectMongo from "./infra/mongodb/db";
+
+import userRoutes from "./routes/user.routes";
+import authRoutes from "./routes/auth.routes";
+import todoRoutes from "./routes/todo.routes";
+
+export let app: Express = express();
+
 const port = process.env.APP_PORT || 8000;
 const cCPUs = require('os').cpus().length;
+const connectionString = process.env.MONGODB_CONNECTION_STRING || 'mongodb://127.0.0.1/todoapp';
+const dbName = process.env.MONGO_DB_NAME || 'test';
 
 app.use(cors());
+
+export const server = http.createServer(app);
+export const httpTerminator = createHttpTerminator({
+    server,
+});
+
 app.use(express.json());
 app.use(
     express.urlencoded({
@@ -18,13 +36,21 @@ app.use(
     })
 );
 
-app.get('/_health', (req: Request, res: Response) => {
-    res.send('ok');
+app.use(`/api/v1/users`, userRoutes);
+app.use(`/api/v1/auth`, authRoutes);
+app.use(`/api/v1/todos`, todoRoutes);
+
+app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+    next(err);
 });
 
-app.listen(port, () => {
-    const userController = Container.get(AuthController);
-    userController.test()
+app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+    errorHandler.handleError(err, res);
+});
+
+connectMongo(connectionString, dbName)
+
+server.listen(port, () => {
     logger.info(`Number of CPUc: ${cCPUs} `,)
-    logger.info(`Server is Fire at http://localhost:${port}`)
+    logger.info(`⚡️[server]: Spustili jsme server na http://localhost:${port}`)
 });

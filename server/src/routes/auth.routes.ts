@@ -1,16 +1,18 @@
 import express, { Request, Response } from 'express';
-// import { Container } from 'typedi';
-// import UserController from '../controllers/user.controller.js';
-// import { requestValidator } from '../middlewares/input_validator.middleware.js';
-// import CreateUserDto from '../dtos/create_user.dto.js';
+import AuthController from '../controllers/auth.controller';
+import { Container } from 'typedi';
+import { requestValidator } from '../middlewares/input_validator.middleware';
+import LoginDTO from '../dtos/login.dto';
 
 const Router = express.Router();
-// const userController = Container.get(UserController);
+const authController = Container.get(AuthController);
 
-// Router.post('/register', requestValidator(CreateUserDto), (req: Request, res: Response) => userController.register(req, res));
-// /api/v1/auth/
-// POST /login
-// /register
+
+/**
+ * @route POST /api/v1/auth/login
+ * @description sign in user and returns jwt
+ */
+Router.post('/login', requestValidator(LoginDTO), (req: Request, res: Response) => authController.login(req,res))
 
 
 export default Router;

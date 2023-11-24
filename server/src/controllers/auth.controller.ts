@@ -1,17 +1,21 @@
 import { Service } from "typedi";
-import logger from "../vendor/pavel_vacha/logger/logger";
+import { Request, Response } from "express";
+import LoginDTO from "../dtos/login.dto";
+import AuthService from "../services/auth.service";
+import Controller from "./controller";
 
 @Service()
-export default class AuthController {
-    
-    private readonly logMetadata = { "name": "AUTH_CONTROLLER" };
+export default class AuthController extends Controller {
+    private authService: AuthService;
 
-    constructor() {
-
+    constructor(authService: AuthService) {
+        super()
+        this.authService = authService;
     }
 
-    test() {
-        logger.info("Auth controller běží", this.logMetadata)
+    async login(req: Request, res: Response) {
+        const result = await this.authService.login(req.body as LoginDTO);
+        return this.send({ message: "Úspěšně jsme vás přihlásili", data: result }, res);
     }
+
 }
-

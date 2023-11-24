@@ -1,5 +1,6 @@
 import { Service } from "typedi";
 import UserRepository from "../repositories/user.repository";
+import RegisterDTO from "../dtos/register.dto";
 
 @Service()
 export default class UserService {
@@ -9,8 +10,8 @@ export default class UserService {
         this.userRepository = userRepository;
     }
 
-    async register() {
-
+    async register(data: RegisterDTO) {
+        return await this.userRepository.createUser(data);
     }
 
 
