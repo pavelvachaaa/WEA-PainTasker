@@ -19,8 +19,8 @@
       </div>
     </nav>
   </header>
-  <section class="bg-white dark:bg-gray-900 h-screen">
-    <div class="mt-16  lg:mt-16 py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16 lg:px-12">
+  <section class="bg-white dark:bg-gray-900">
+    <div class="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16 lg:px-12">
       <a href="#"
         class="inline-flex justify-between items-center py-1 px-1 pr-4 mb-7 text-sm text-gray-700 bg-gray-100 rounded-full dark:bg-gray-800 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700"
         role="alert">
@@ -119,7 +119,7 @@
       <div class="mx-auto max-w-screen-md text-center mb-8 lg:mb-12">
         <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">Moje aplikace je dostupná
           komukoliv</h2>
-        <p class="mb-5 font-light text-gray-500 sm:text-xl dark:text-gray-400">V PainTaskeru se soustředímě nat trh, kde
+        <p class="mb-5 font-light text-gray-500 sm:text-xl dark:text-gray-400">V PainTaskeru se soustředímě na trh, kde
           technologie, inovace a kapitál dokáží odemknout dlouhodobou hodnotu a řídit Váš ekonomický růst </p>
       </div>
       <div class="space-y-8 lg:grid lg:grid-cols-3 sm:gap-6 xl:gap-10 lg:space-y-0">
