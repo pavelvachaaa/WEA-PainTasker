@@ -22,13 +22,13 @@ import TodoItem from "./todo-list/TodoItem.vue"
 
                 </div>
                 <input type="text" id="title" v-model="form.title"
-                    class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-t-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-800 rounded-t-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="Vyklidit koš" required>
                 <button type="submit"
                     class="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-900">Přidat</button>
             </div>
         </form>
-        <div class="w-3/4 lg:w-1/2">
+        <div class="w-3/4 lg:w-1/2 border-t border-gray-700">
 
             <TodoItem></TodoItem>
             <TodoItem></TodoItem>
@@ -40,8 +40,8 @@ import TodoItem from "./todo-list/TodoItem.vue"
         <div class="w-3/4 lg:w-1/2">
 
 
-            <div class="p-3 bg-white border border-gray-200 rounded-b-lg dark:bg-gray-800 dark:border-gray-600">
-                <span>Smazat dokončené</span>
+            <div class="p-3 bg-white  rounded-b-lg dark:bg-gray-800 border-t border-gray-700">
+                <span class="dark:text-white ">Vypíčené WEA</span>
             </div>
 
         </div>

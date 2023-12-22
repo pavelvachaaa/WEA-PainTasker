@@ -1,1 +1,1 @@
-Zde bude celý todo list 
+Lituji toho, že jsem neodevzdal STIN :)
