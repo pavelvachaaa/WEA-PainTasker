@@ -1,20 +1,33 @@
-# # První stage
-# FROM node:18.16.0-alpine AS builder
-# WORKDIR /
-# COPY package*.json ./
-# RUN npm install
-# COPY . .
-# RUN npm run build
+# base
+FROM node:21.2.0-alpine AS base
 
-# # Druhá stage
-# FROM node:18.16.0-alpine AS server
-# WORKDIR /app
-# COPY package* ./
-# RUN npm install --production
-# COPY --from=builder . .
-# COPY --from=builder ./dist ./dist
+WORKDIR /usr/src/app
 
-# # TODO: Push to the private docker hub+ on pavel-vacha.cz
+COPY package*.json ./
+    
+RUN npm install
 
-# EXPOSE 4000
-# CMD ["npm", "start"]
+COPY . .
+
+# for build
+
+FROM base as builder
+
+WORKDIR /usr/src/app
+
+RUN npm run build
+
+
+# for production
+
+FROM node:21.2.0-alpine
+
+WORKDIR /usr/src/app
+
+COPY package*.json ./
+
+RUN npm install --only=production
+
+COPY --from=builder /usr/src/app/dist ./
+
+ENTRYPOINT ["node", "./index.js"]

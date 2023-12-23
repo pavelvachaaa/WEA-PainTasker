@@ -6,6 +6,7 @@ import TodoController from '../../controllers/todo.controller';
 import { CustomRequest, auth } from '../../middlewares/auth.middleware';
 import DeleteTodoDTO from '../../dtos/delete_todo.dto';
 import UpdateTodoDTO from '../../dtos/update_todo';
+import ResourceDTO from '../../dtos/resource.dto';
 
 const Router = express.Router();
 const todoController = Container.get(TodoController);
@@ -41,7 +42,7 @@ Router.get('/', auth, (req: Request, res: Response) => todoController.getAll(req
  * @route GET /api/v1/todos/:id
  * @description this route returns specific todo
  */
-Router.get('/:id', requestValidator(DeleteTodoDTO), auth, (req: Request, res: Response) => todoController.get(req as CustomRequest, res))
+Router.get('/:id', requestValidator(ResourceDTO), auth, (req: Request, res: Response) => todoController.get(req as CustomRequest, res))
 
 
 

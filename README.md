@@ -4,11 +4,16 @@
 ## Code coverage
 Již brzy
 
-##Technologie
+## Technologie
 Již brzy
 
 ## Deployment
-Již brzy 
+```bash
+# Pro DEV
+docker compose  --env-file ./.env up -d
+
+
+```
 
 ## Poznámky
 Již brzy
