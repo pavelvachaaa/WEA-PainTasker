@@ -19,6 +19,11 @@ MONGO_INITDB_ROOT_USERNAME=user
 MONGO_INITDB_ROOT_PASSWORD=password
 ```
 
+a pro frontend `.env`:
+```conf
+VITE_ROOT_API=http://localhost:5454
+```
+
 
 
 ```bash
