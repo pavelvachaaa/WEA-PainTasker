@@ -48,6 +48,8 @@
 </template>
 
 <script>
+import { apiCall } from '@/services/api.service';
+
 export default {
     data() {
         return {
@@ -59,24 +61,11 @@ export default {
     },
     methods: {
         async login() {
+            const data = await apiCall({
+                endpoint: "/api/v1/auth/login", body: this.form ?? {}, shouldToast: true
+            })
 
-            const headersList = {
-                "Content-Type": "application/json"
-            }
-
-            const bodyContent = JSON.stringify({
-                "email": this.form.email ?? "",
-                "password": this.form.password ?? ""
-            });
-
-            const response = await fetch("http://localhost:5454/api/v1/auth/login", {
-                method: "POST",
-                body: bodyContent,
-                headers: headersList
-            });
-
-            const data = await response.json();
-            if (response.ok) {
+            if (data?.responseCode === 200) {
 
                 // Dáváme to do localStoarge, aby nám odpadla trable s CSRF
                 // Ovšem, když se tu vyskytne chyba s XSS, bude to mít horší dopad... - je to prostě tradeoff
@@ -84,11 +73,8 @@ export default {
                     localStorage.setItem("jwt", data.data.token)
                 }
 
-                this.$toast.success("Úspěšně jsme Vás přihlásili");
                 this.$router.push('/dashboard')
 
-            } else {
-                this.$toast.error(data.message ?? "Chyba!");
             }
 
 

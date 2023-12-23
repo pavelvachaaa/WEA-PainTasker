@@ -55,6 +55,8 @@
 </template>
 
 <script>
+import { apiCall } from '@/services/api.service';
+
 export default {
     data() {
         return {
@@ -68,31 +70,13 @@ export default {
     },
     methods: {
         async register() {
-            let headersList = {
-                "Content-Type": "application/json"
-            }
+            const data = await apiCall({
+                endpoint: "/api/v1/users", body: this.form ?? {}, shouldToast: true
+            })
 
-            let bodyContent = JSON.stringify({
-                "name": this.form.name ?? "",
-                "email": this.form.email ?? "",
-                "password": this.form.password ?? ""
-            });
-
-            let response = await fetch("http://localhost:5454/api/v1/users", {
-                method: "POST",
-                body: bodyContent,
-                headers: headersList
-            });
-
-            const data = await response.json();
-            if (response.ok) {
-                this.$toast.success("Úspěšně jsme Vás registrovali");
+            if (data?.responseCode === 200) {
                 this.$router.push('/login')
-
-            } else {
-                this.$toast.error(data.message ?? "Chyba!");
             }
-
 
         }
     }
