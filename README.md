@@ -8,6 +8,19 @@ Již brzy
 Již brzy
 
 ## Deployment
+
+Pro úspěšně spojení s databází a pro ostatní nastavení je třeba mít korektně nastavený `.env`, ukázka jak by měl ideálně vypadat:
+```conf
+APP_PORT=5454
+MONGODB_CONNECTION_STRING=mongodb://jmeno:heslo@host:27017/?authMechanism=DEFAULT
+MONGO_DB_NAME=todo_app
+SECRET_KEY=32
+MONGO_INITDB_ROOT_USERNAME=user
+MONGO_INITDB_ROOT_PASSWORD=password
+```
+
+
+
 ```bash
 # Pro DEV
 docker compose  --env-file ./.env up -d
