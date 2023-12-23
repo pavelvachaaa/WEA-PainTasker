@@ -5,10 +5,10 @@ const $toast = useToast();
 
 /**
  * Funkce vrací data z API ve formátu {message:"", data:"",errors:[], responseCode:0}
- * @param {*} method - GET/PUT/POST/DELETE
- * @param {*} endpoint - e.g. GET /api/v1/resource
- * @param {*} body - {}
- * @param {*} shouldToast - chceme zobrazit notifikaci? 
+ * @param {string} method - GET/PUT/POST/DELETE
+ * @param {string} endpoint - e.g. GET /api/v1/resource
+ * @param {Map} body - {}
+ * @param {boolean} shouldToast - chceme zobrazit notifikaci? 
  * @returns JSON data z API
  */
 const apiCall = async ({ method = "POST", endpoint = "", body = {}, shouldToast = false }) => {
@@ -16,7 +16,7 @@ const apiCall = async ({ method = "POST", endpoint = "", body = {}, shouldToast 
     const headersList = {
         "Content-Type": "application/json"
     }
-    console.log(import.meta.env)
+
     const response = await fetch(`${import.meta.env.VITE_ROOT_API ?? 'http://localhost:5454'}${endpoint}`, {
         method: method,
         body: JSON.stringify(body),
