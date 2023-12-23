@@ -1,7 +1,5 @@
 import { useToast } from 'vue-toast-notification';
 
-const APP_PORT = 5454
-const APP = `http://localhost:${APP_PORT}`
 const $toast = useToast();
 
 
@@ -18,8 +16,8 @@ const apiCall = async ({ method = "POST", endpoint = "", body = {}, shouldToast 
     const headersList = {
         "Content-Type": "application/json"
     }
-
-    const response = await fetch(`${APP}${endpoint}`, {
+    console.log(import.meta.env)
+    const response = await fetch(`${import.meta.env.VITE_ROOT_API ?? 'http://localhost:5454'}${endpoint}`, {
         method: method,
         body: JSON.stringify(body),
         headers: headersList
