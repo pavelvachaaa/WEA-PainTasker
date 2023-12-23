@@ -48,8 +48,7 @@
 </template>
 
 <script>
-import { apiCall } from '@/services/api.service';
-
+import userService from "../services/user.service"
 export default {
     data() {
         return {
@@ -61,23 +60,11 @@ export default {
     },
     methods: {
         async login() {
-            const data = await apiCall({
-                endpoint: "/api/v1/auth/login", body: this.form ?? {}, shouldToast: true
-            })
+            const res = await userService.login(this.form);
 
-            if (data?.responseCode === 200) {
-
-                // Dáváme to do localStoarge, aby nám odpadla trable s CSRF
-                // Ovšem, když se tu vyskytne chyba s XSS, bude to mít horší dopad... - je to prostě tradeoff
-                if (data?.data?.token) {
-                    localStorage.setItem("jwt", data.data.token)
-                }
-
+            if (res) {
                 this.$router.push('/dashboard')
-
             }
-
-
         }
     }
 };

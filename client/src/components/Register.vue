@@ -55,7 +55,7 @@
 </template>
 
 <script>
-import { apiCall } from '@/services/api.service';
+import userService from "../services/user.service"
 
 export default {
     data() {
@@ -70,11 +70,9 @@ export default {
     },
     methods: {
         async register() {
-            const data = await apiCall({
-                endpoint: "/api/v1/users", body: this.form ?? {}, shouldToast: true
-            })
+            const res = await userService.register(this.form);
 
-            if (data?.responseCode === 200) {
+            if (res) {
                 this.$router.push('/login')
             }
 

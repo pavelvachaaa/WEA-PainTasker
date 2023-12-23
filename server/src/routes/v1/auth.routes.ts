@@ -1,8 +1,8 @@
 import express, { Request, Response } from 'express';
-import AuthController from '../controllers/auth.controller';
+import AuthController from '../../controllers/auth.controller';
 import { Container } from 'typedi';
-import { requestValidator } from '../middlewares/input_validator.middleware';
-import LoginDTO from '../dtos/login.dto';
+import { requestValidator } from '../../middlewares/input_validator.middleware';
+import LoginDTO from '../../dtos/login.dto';
 
 const Router = express.Router();
 const authController = Container.get(AuthController);

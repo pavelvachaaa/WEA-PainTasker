@@ -1,11 +1,14 @@
 import { Schema, model, Document } from 'mongoose';
 import { hash, compare } from 'bcrypt';
 import logger from '../vendor/pavel_vacha/logger/logger';
+import { ITodo } from './todo.schema';
 
 export interface IUser extends Document {
+    id: string;
     name: string;
     email: string;
     password: string;
+    todos: ITodo[];
     comparePassword(candidatePassword: string): Promise<boolean>;
 }
 
@@ -13,6 +16,8 @@ const UserSchema = new Schema<IUser>({
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true, select: false },
+    todos: [{ type: Schema.Types.ObjectId, ref: "todos" }],
+
 });
 
 UserSchema.index({ email: 1 }, { unique: true });
@@ -30,7 +35,7 @@ UserSchema.pre<IUser>('save', async function (next) {
     if (!user.isModified('password')) return next();
 
     if (user.isModified('email')) {
-        user.email = user.email.toLowerCase(); 
+        user.email = user.email.toLowerCase();
     }
 
     try {

@@ -11,9 +11,9 @@ import { errorHandler } from "./vendor/pavel_vacha/exceptions/error_handler";
 import logger from './vendor/pavel_vacha/logger/logger';
 import connectMongo from "./infra/mongodb/db";
 
-import userRoutes from "./routes/user.routes";
-import authRoutes from "./routes/auth.routes";
-import todoRoutes from "./routes/todo.routes";
+import userRoutes from "./routes/v1/user.routes";
+import authRoutes from "./routes/v1/auth.routes";
+import todoRoutes from "./routes/v1/todo.routes";
 
 export let app: Express = express();
 

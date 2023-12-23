@@ -17,7 +17,7 @@ export default class AuthService {
             throw new AppError({
                 description: "Omlouváme se, ale naše přihlašovací služba má výpadek!",
                 name: "AUTH_SERVICE",
-                body: {email: data.email},
+                body: { email: data.email },
                 httpCode: HttpCode.INTERNAL_SERVER_ERROR,
             });
         }
@@ -27,7 +27,7 @@ export default class AuthService {
             throw new AppError({
                 description: "Neplatné přihlašovací údaje",
                 name: "AUTH_SERVICE",
-                body: {email: data.email},
+                body: { email: data.email },
                 httpCode: HttpCode.BAD_REQUEST,
             });
         }
@@ -37,7 +37,7 @@ export default class AuthService {
             throw new AppError({
                 description: "Neplatné přihlašovací údaje",
                 name: "AUTH_SERVICE",
-                body: {email: data.email},
+                body: { email: data.email },
                 httpCode: HttpCode.BAD_REQUEST,
             });
         }

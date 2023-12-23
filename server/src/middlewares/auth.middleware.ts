@@ -1,9 +1,10 @@
 import jwt, { Secret, JwtPayload } from 'jsonwebtoken';
 import { Request, Response, NextFunction } from 'express';
 import { AppError, HttpCode } from '../vendor/pavel_vacha/exceptions/app_error';
+import { IUser } from '../models/user.schema';
 
 export interface CustomRequest extends Request {
-    userData: { email: string } | JwtPayload;
+    userData: IUser | JwtPayload;
 }
 
 export const auth = async (req: Request, res: Response, next: NextFunction) => {
@@ -19,7 +20,7 @@ export const auth = async (req: Request, res: Response, next: NextFunction) => {
 
     try {
         const decoded = jwt.verify(token, process.env.SECRET_KEY as Secret);
-        (req as CustomRequest).userData = decoded as { email: string };
+        (req as CustomRequest).userData = decoded as IUser
     } catch (err) {
         throw new AppError({
             httpCode: HttpCode.UNAUTHORIZED,
