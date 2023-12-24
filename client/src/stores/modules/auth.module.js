@@ -21,7 +21,6 @@ const authModule = {
 
     actions: {
         async login({ commit }, data) {
-            console.log(data)
             const res = await userService.login(data);
 
             if (res) {
@@ -37,6 +36,12 @@ const authModule = {
     },
 
     getters: {
+
+        /**
+         * Funkce vrací uživatele pokud je přihlášen a má validní token
+         * pokud nemá validní token je smazan a přesměrován na přihlašovací obrazovku
+         * @returns user
+         */
         getUser(state) {
             if (!isTokenValid(getToken())) {
                 state.user = {};
@@ -50,6 +55,7 @@ const authModule = {
 
             return state.user;
         },
+
         isLoggedIn(state) {
             return isTokenValid(getToken())
         }

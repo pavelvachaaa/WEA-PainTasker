@@ -59,6 +59,10 @@ const todoModule = {
     },
 
     getters: {
+        /**
+         * Funkce vrací todos seřazené podle editace a zároveň dává isDone==true uplně dolu
+         * @returns todos
+         */
         allTodos(state) {
             const sortedTodos = [...state.todos].sort((a, b) => {
                 if (a.isDone !== b.isDone) {
@@ -71,12 +75,20 @@ const todoModule = {
             return sortedTodos;
         },
 
+        /**
+         * Vrací všechny todos seřazené dle upadatedAt, které jsou hotové
+         * @returns todos
+         */
         allTodosDone(state) {
             return state.todos.filter(todo => todo.isDone).sort((a, b) => {
                 return new Date(b.updatedAt) - new Date(a.updatedAt);
             });
         },
 
+        /**
+         * Vrací všechny todos seřazené dle upadatedAt, které nejsou hotové
+         * @returns todos
+         */
         allTodosNotDone(state) {
             return state.todos.filter(todo => !todo.isDone).sort((a, b) => {
                 return new Date(b.updatedAt) - new Date(a.updatedAt);

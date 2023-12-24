@@ -42,15 +42,13 @@
 
 
 <script setup>
-
-
 import TodoItem from "./TodoItem.vue"
 
 import { useStore } from 'vuex';
+import { useToast } from 'vue-toast-notification';
 import { computed, onMounted } from 'vue';
 import { ref } from 'vue';
 import { getToken } from "@/utils/auth.util";
-import { useToast } from 'vue-toast-notification';
 
 const $toast = useToast();
 
@@ -68,7 +66,6 @@ const form = {
 
 const store = useStore();
 const todos = computed(() => {
-
     switch (currentFilter.value) {
         case "done":
             return store.getters["todos/allTodosDone"]
@@ -80,6 +77,7 @@ const todos = computed(() => {
     }
 });
 
+// Pouze pro zjednodušení kontroly WEA vyučujícím
 const tokenCopy = () => {
     const jwtToken = getToken()
 
@@ -111,7 +109,7 @@ const setFilter = filter => {
     currentFilter.value = filter;
 };
 
-
+// Chceme to načíst až po té co komponenta je načtená - odpadne nutnost Suspense
 onMounted(async () => {
     await store.dispatch('todos/getTodos');
 });
