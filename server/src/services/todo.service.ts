@@ -6,6 +6,7 @@ import UserRepository from "../repositories/user.repository";
 import DeleteTodoDTO from "../dtos/delete_todo.dto";
 import { AppError, HttpCode } from "../vendor/pavel_vacha/exceptions/app_error";
 import UpdateTodoDTO from "../dtos/update_todo";
+import { ITodo } from "../models/todo.schema";
 
 @Service()
 export default class TodoService {
@@ -17,6 +18,12 @@ export default class TodoService {
         this.userRepository = userRepository;
     }
 
+    /**
+     * Pokud je uživatel přihlášen vrátí dané todo podle id 
+     * @param todoId 
+     * @param user 
+     * @returns Jedno todo
+     */
     async get(todoId: string, user: IUser) {
         const doesUserOwnTodo = await this.userRepository.doesUserOwnTodo(todoId, user.id);
         if (!doesUserOwnTodo) {
@@ -33,11 +40,22 @@ export default class TodoService {
 
     }
 
+    /**
+     * Pokud je uživatel přihlášen vezme všechny jeho Todos
+     * @param user 
+     * @returns list of todos
+     */
     async getAll(user: IUser) {
         return await this.userRepository.getAllTodos(user);
     }
 
-    async createTodo(data: CreateTodoDTO, user: IUser) {
+    /**
+     * K právě přihlášenému uživateli vytvoří TODO
+     * @param data 
+     * @param user 
+     * @returns nové TODO
+     */
+    async createTodo(data: CreateTodoDTO, user: IUser): Promise<ITodo> {
         const todo = this.todoRepository.createTodo(data);
         const res = await this.userRepository.pushTodoToUser(todo, user);
 
@@ -53,7 +71,13 @@ export default class TodoService {
         return todo
     }
 
-    async deleteTodo(data: DeleteTodoDTO, user: IUser) {
+    /**
+     * Na základě ID a ownershipu k todo smaže todo 
+     * @param data 
+     * @param user 
+     * @returns zdali se to povedlo
+     */
+    async deleteTodo(data: DeleteTodoDTO, user: IUser): Promise<boolean> {
         const deletedFromUser = await this.userRepository.deleteUserTodo(data.id, user.id);
 
         if (!deletedFromUser) {
@@ -81,8 +105,14 @@ export default class TodoService {
         return deleted;
     }
 
-
-    async updateTodo(todoId: string, data: UpdateTodoDTO, user: IUser) {
+    /**
+     * Upravuje title a isdone
+     * @param todoId 
+     * @param data 
+     * @param user 
+     * @returns zdali se to povedlo
+     */
+    async updateTodo(todoId: string, data: UpdateTodoDTO, user: IUser): Promise<boolean> {
         const doesUserOwnTodo = await this.userRepository.doesUserOwnTodo(todoId, user.id);
         if (!doesUserOwnTodo) {
             throw new AppError({

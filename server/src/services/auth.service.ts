@@ -12,6 +12,11 @@ export default class AuthService {
         this.userRepository = userRepository;
     }
 
+    /**
+     * Metoda provede autentifikaci uživatele na základě emailu a hesla
+     * @param data 
+     * @returns JWT Token
+     */
     async login(data: LoginDTO): Promise<any> {
         if (!process.env.SECRET_KEY) {
             throw new AppError({

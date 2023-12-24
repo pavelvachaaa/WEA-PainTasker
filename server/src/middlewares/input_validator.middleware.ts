@@ -3,6 +3,11 @@ import { plainToClass } from "class-transformer";
 import { NextFunction, Request } from "express";
 import { AppError, HttpCode } from "../vendor/pavel_vacha/exceptions/app_error";
 
+/**
+ * Funkce dostane jako parametr DTO (data transfer object) a zkontroluje zdali pooždavek
+ * od uživatele odpovída parametrům DTO
+ * @param dtoClass - DTO
+ */
 export const requestValidator = (dtoClass: any): any => {
     return async function (req: Request, res: Response, next: NextFunction) {
         let body = req.body;

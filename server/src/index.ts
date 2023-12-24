@@ -18,7 +18,6 @@ import todoRoutes from "./routes/v1/todo.routes";
 export let app: Express = express();
 
 const port = process.env.APP_PORT || 8000;
-const cCPUs = require('os').cpus().length;
 const connectionString = process.env.MONGODB_CONNECTION_STRING || 'mongodb://127.0.0.1/todoapp';
 const dbName = process.env.MONGO_DB_NAME || 'test';
 
@@ -51,6 +50,5 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 connectMongo(connectionString, dbName)
 
 server.listen(port, () => {
-    logger.info(`Number of CPUc: ${cCPUs} `,)
     logger.info(`⚡️[server]: Spustili jsme server na http://localhost:${port}`)
 });

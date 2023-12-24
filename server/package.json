@@ -5,6 +5,7 @@
   "main": "./src/index.js",
   "scripts": {
     "build": "npx tsc",
+    "test": "node  --test --require ts-node/register  ./src/tests/**/*test.ts",
     "start": "node --env-file ./.env dist/index.js",
     "dev": "nodemon ./src/index.ts"
   },

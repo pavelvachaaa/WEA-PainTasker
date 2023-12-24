@@ -3,6 +3,7 @@ version: '3.8'
 services:
   todo-api:
     container_name: todo-api 
+    restart: unless-stopped
     build:
       context: .
       dockerfile: Dockerfile
@@ -19,6 +20,7 @@ services:
   m01:
     container_name: m01
     image: mongo:latest
+    restart: unless-stopped
     environment:
      - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}

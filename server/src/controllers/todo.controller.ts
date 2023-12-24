@@ -42,13 +42,11 @@ export default class TodoController extends Controller {
 
     public async create(req: CustomRequest, res: Response) {
         const result = await this.todoService.createTodo(req.body as CreateTodoDTO, req.userData as IUser);
-
         return this.send({ message: "Úspěšně jsme vytvořili položku", data: result }, res);
     }
 
     public async delete(req: CustomRequest, res: Response) {
         const result = await this.todoService.deleteTodo({ id: req.params.id } as DeleteTodoDTO, req.userData as IUser);
-
         return this.send({ message: "Úspěšně jsme smazali položku", data: result }, res);
     }
 
@@ -63,7 +61,6 @@ export default class TodoController extends Controller {
         }
 
         const result = await this.todoService.updateTodo(req.params.id, req.body as UpdateTodoDTO, req.userData as IUser);
-
         return this.send({ message: "Úspěšně jsme upravili položku", data: result }, res);
     }
 }

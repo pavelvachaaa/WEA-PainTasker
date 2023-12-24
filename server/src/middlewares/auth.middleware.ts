@@ -7,6 +7,12 @@ export interface CustomRequest extends Request {
     userData: IUser | JwtPayload;
 }
 
+/**
+ * Metoda kouká zdali má uživatel platný token
+ * @param req express Request
+ * @param res express Response
+ * @param next express NextFunction
+ */
 export const auth = async (req: Request, res: Response, next: NextFunction) => {
     const token = req.headers?.authorization?.replace('Bearer ', '');
 

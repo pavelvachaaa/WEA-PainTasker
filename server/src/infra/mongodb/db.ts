@@ -1,5 +1,10 @@
 import { connect } from 'mongoose';
 
+/**
+ * Funkce se na základě connection stringu připojí k mongu
+ * @param connectionString 
+ * @param dbName 
+ */
 const connectMongo = (connectionString: string, dbName="test") => {
     connect(connectionString,{dbName:dbName})
         .then(() => {

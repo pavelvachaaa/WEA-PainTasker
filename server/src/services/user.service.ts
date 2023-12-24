@@ -10,7 +10,13 @@ export default class UserService {
         this.userRepository = userRepository;
     }
 
-    async register(data: RegisterDTO) {
+
+    /**
+     * Na základě předaných parametrů je uživatel vytvořen v DB
+     * @param data 
+     * @returns zdali se povedlo
+     */
+    async register(data: RegisterDTO): Promise<boolean> {
         return await this.userRepository.createUser(data);
     }
 }
