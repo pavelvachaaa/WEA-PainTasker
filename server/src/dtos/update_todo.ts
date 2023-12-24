@@ -1,8 +1,12 @@
-import { IsDefined } from "class-validator";
+import { IsBoolean, IsDefined, IsString } from "class-validator";
 import { Expose } from "class-transformer";
 
 export default class UpdateTodoDTO {
-    @IsDefined()
+    @IsString()
     @Expose()
     title!: string;
+
+    @IsBoolean()
+    @Expose()
+    isDone!: boolean;
 }

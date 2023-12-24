@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import DashboardView from '../views/DashboardView.vue'
 import PageNotFoundView from "../views/PageNotFoundView.vue"
+import { getToken, isTokenValid } from '@/utils/auth.util'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -37,11 +38,9 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   if (to.meta.requiresAuth) {
-    const token = localStorage.getItem('jwt');
-    // Do decode and try if its valid token - probably try catch?
-    // if its not valid token delete it from local storage
+    const token = getToken()
 
-    if (token) {
+    if (isTokenValid(token)) {
       // User is authenticated, proceed to the route
       next();
     } else {

@@ -1,4 +1,6 @@
+import { jwtDecode } from "jwt-decode"
 import { apiCall } from "./api.service"
+import { getToken, getUserFromToken } from "@/utils/auth.util"
 
 export default {
     login: async (body = {}) => {
@@ -12,23 +14,22 @@ export default {
             // Ovšem, když se tu vyskytne chyba s XSS, bude to mít horší dopad... - je to prostě tradeoff
             if (data?.data?.token) {
                 localStorage.setItem("jwt", data.data.token)
+                return jwtDecode(data.data.token)
             }
         }
 
-        return success
-
+        return null;
     },
 
     register: async (body = {}) => {
         const data = await apiCall({
-            endpoint: "/api/v1/users", body: body, shouldToast: true, 
+            endpoint: "/api/v1/users", body: body, shouldToast: true,
         })
 
         return data?.responseCode === 200
     },
 
-    logout: async () => {
-
+    getUserFromStorage: () => {
+        return getUserFromToken(getToken()) ?? {}
     }
-
 }

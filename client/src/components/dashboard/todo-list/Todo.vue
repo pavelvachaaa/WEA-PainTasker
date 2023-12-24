@@ -1,35 +1,3 @@
-<script setup>
-
-
-import TodoItem from "./TodoItem.vue"
-
-import { useStore } from 'vuex';
-import { computed, onMounted } from 'vue';
-import { ref } from 'vue';
-
-const form = {
-    title: ref('')
-};
-
-const store = useStore();
-const todos = computed(() => store.getters["todos/allTodos"]);
-
-
-const addTodo = async () => {
-    if (form.title.value.trim() !== '') {
-        await store.dispatch('todos/addTodo', form.title.value);
-        form.title.value = '';
-    }
-};
-
-onMounted(async () => {
-    await store.dispatch('todos/getTodos');
-});
-
-
-
-</script>
-
 <template>
     <div class="flex  flex-col justify-center items-center py-20">
         <form class="w-3/4 lg:w-1/2 " @submit.prevent="addTodo">
@@ -46,24 +14,80 @@ onMounted(async () => {
                 </div>
                 <input type="text" id="title" v-model="form.title.value"
                     class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-800 rounded-t-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Vyklidit koš" required>
+                    placeholder="Zprovoznit semestrálku na WEA" required>
                 <button type="submit"
                     class="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-900">Přidat</button>
             </div>
         </form>
         <div class="w-3/4 lg:w-1/2 border-t border-gray-700">
 
-            <TodoItem v-for="todo in todos" :todo="todo"></TodoItem>
+            <TodoItem v-for="todo in todos" :todo="todo" :key="todo._id"></TodoItem>
 
 
         </div>
-        <div class="w-3/4 lg:w-1/2">
+        <div class="w-3/4 lg:w-1/2 flex justify-between rounded-b-lg dark:bg-gray-800 border-t border-gray-700">
 
-
-            <div class="p-3 bg-white  rounded-b-lg dark:bg-gray-800 border-t border-gray-700">
-                <span class="dark:text-white ">Vypíčené WEA</span>
+            <div v-for="filter in filters" :key="filter.value"
+                class="p-3 rounded-b-lg cursor-pointer flex-grow text-center text-sm hover:bg-gray-700 text-white "
+                @click="setFilter(filter.value)" :class="{ ' dark:bg-gray-700': currentFilter === filter.value }">
+                {{ filter.label }}
             </div>
 
         </div>
     </div>
 </template>
+
+
+<script setup>
+
+
+import TodoItem from "./TodoItem.vue"
+
+import { useStore } from 'vuex';
+import { computed, onMounted } from 'vue';
+import { ref } from 'vue';
+
+const filters = [
+    { label: 'Vše', value: 'all' },
+    { label: 'Hotové', value: 'done' },
+    { label: 'Čekající', value: 'notDone' }
+];
+
+const currentFilter = ref('all');
+
+const form = {
+    title: ref('')
+};
+
+const store = useStore();
+const todos = computed(() => {
+
+    switch (currentFilter.value) {
+        case "done":
+            return store.getters["todos/allTodosDone"]
+        case "notDone":
+            return store.getters["todos/allTodosNotDone"]
+        default:
+            return store.getters["todos/allTodos"]
+
+    }
+});
+
+const addTodo = async () => {
+    if (form.title.value.trim() !== '') {
+        await store.dispatch('todos/addTodo', form.title.value);
+        form.title.value = '';
+    }
+};
+
+const setFilter = filter => {
+    currentFilter.value = filter;
+};
+
+
+onMounted(async () => {
+    await store.dispatch('todos/getTodos');
+});
+
+
+</script>

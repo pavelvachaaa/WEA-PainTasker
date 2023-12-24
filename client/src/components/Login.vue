@@ -21,12 +21,12 @@
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">E-mail</label>
                                 <input type="email" name="email" id="email"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                    placeholder="name@company.com" required="" v-model="form.email">
+                                    placeholder="name@company.com" required="" v-model="form.email.value">
                             </div>
                             <div>
                                 <label for="password"
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Heslo</label>
-                                <input type="password" name="password" v-model="form.password" id="password"
+                                <input type="password" name="password" v-model="form.password.value" id="password"
                                     placeholder="••••••••"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                     required="">
@@ -47,25 +47,19 @@
     </main>
 </template>
 
-<script>
-import userService from "../services/user.service"
-export default {
-    data() {
-        return {
-            form: {
-                email: '',
-                password: "",
-            }
-        }
-    },
-    methods: {
-        async login() {
-            const res = await userService.login(this.form);
+<script setup>
+import { ref } from 'vue';
+import { useStore } from 'vuex';
 
-            if (res) {
-                this.$router.push('/dashboard')
-            }
-        }
-    }
-};
+const store = useStore();
+const form = {
+    email: ref(""),
+    password: ref(""),
+}
+
+const login = async () => {
+    await store.dispatch('auth/login', { email: form.email.value, password: form.password.value });
+}
+
+
 </script>

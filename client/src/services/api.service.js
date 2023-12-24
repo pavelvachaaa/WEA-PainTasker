@@ -1,3 +1,4 @@
+import { getToken } from '@/utils/auth.util';
 import { useToast } from 'vue-toast-notification';
 
 const $toast = useToast();
@@ -15,7 +16,7 @@ const apiCall = async ({ method = "POST", endpoint = "", body = {}, shouldToast 
 
     const headersList = {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${localStorage.getItem("jwt")}`
+        "Authorization": `Bearer ${getToken()}`
     }
 
     let response;
@@ -31,7 +32,6 @@ const apiCall = async ({ method = "POST", endpoint = "", body = {}, shouldToast 
             headers: headersList
         });
     }
-
 
     const data = await response.json();
 

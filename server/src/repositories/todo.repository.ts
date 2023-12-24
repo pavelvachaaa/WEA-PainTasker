@@ -40,7 +40,7 @@ export default class TodoRepository {
      * @returns zdali se povedlo upravit
      */
     public async updateTodo(todoId: string, data: UpdateTodoDTO): Promise<boolean> {
-        const res = await Todo.findByIdAndUpdate(todoId, { title: data.title });
+        const res = await Todo.findByIdAndUpdate(todoId, { title: data.title, isDone: data.isDone });
         // todo check if that was succsesful (todo wasnt found. etc-)
         return !!res;
     }
