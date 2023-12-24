@@ -2,8 +2,8 @@
     <footer
         class="bg-white  shadow sm:flex sm:items-center sm:justify-between p-4 sm:p-6 xl:p-8 dark:bg-gray-800 antialiased">
         <p class="mb-4 text-sm text-center text-gray-500 dark:text-gray-400 sm:mb-0">
-            &copy; 2023 <a href="https://flowbite.com/" class="hover:underline"
-                target="_blank">wea.pavel-vacha.cz</a>. Všechna práva vyhrazena
+            &copy; 2023 <a href="https://flowbite.com/" class="hover:underline" target="_blank">wea.pavel-vacha.cz</a>.
+            Všechna práva vyhrazena
         </p>
         <div class="flex justify-center items-center space-x-1">
 
@@ -43,7 +43,6 @@
 
 <style scoped>
 footer {
-    position: fixed;
     bottom: 0;
     width: 100%;
 }

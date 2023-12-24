@@ -13,7 +13,4 @@ export default class UserService {
     async register(data: RegisterDTO) {
         return await this.userRepository.createUser(data);
     }
-
-
-
 }

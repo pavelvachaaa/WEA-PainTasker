@@ -2,6 +2,8 @@
 Úkolníček, který promění vaše úkoly v bolest, abyste mohli dosáhnout svých cílů s odhodláním a bolestí. Ovládněte své úkoly a získávejte bolest z jejich dokončení!
 
 
+TODO: Přidat tlačítko na zobrazení tokenu a tlačítko na zobrazení všech todos pomocí přesměrování a appendnutí tokenu
+
 ## Technologie
 Již brzy
 

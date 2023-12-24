@@ -14,14 +14,24 @@ const $toast = useToast();
 const apiCall = async ({ method = "POST", endpoint = "", body = {}, shouldToast = false }) => {
 
     const headersList = {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${localStorage.getItem("jwt")}`
     }
 
-    const response = await fetch(`${import.meta.env.VITE_ROOT_API ?? 'http://localhost:5454'}${endpoint}`, {
-        method: method,
-        body: JSON.stringify(body),
-        headers: headersList
-    });
+    let response;
+    if (method === "GET") {
+        response = await fetch(`${import.meta.env.VITE_ROOT_API ?? 'http://localhost:5454'}${endpoint}`, {
+            method: method,
+            headers: headersList
+        });
+    } else {
+        response = await fetch(`${import.meta.env.VITE_ROOT_API ?? 'http://localhost:5454'}${endpoint}`, {
+            method: method,
+            body: JSON.stringify(body),
+            headers: headersList
+        });
+    }
+
 
     const data = await response.json();
 
