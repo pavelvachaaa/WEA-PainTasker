@@ -1,5 +1,8 @@
 <template>
-    <div class="flex  flex-col justify-center items-center py-20">
+    <div class="flex  flex-col justify-center  items-center py-20">
+        <a href="#" @click="tokenCopy" class="text-white text-xs hover:text-blue-800 w-3/4 lg:w-1/2  pb-4">Copy Bearer
+            token</a>
+
         <form class="w-3/4 lg:w-1/2 " @submit.prevent="addTodo">
             <label for="search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Přidat Todo</label>
             <div class="relative">
@@ -46,6 +49,10 @@ import TodoItem from "./TodoItem.vue"
 import { useStore } from 'vuex';
 import { computed, onMounted } from 'vue';
 import { ref } from 'vue';
+import { getToken } from "@/utils/auth.util";
+import { useToast } from 'vue-toast-notification';
+
+const $toast = useToast();
 
 const filters = [
     { label: 'Vše', value: 'all' },
@@ -72,6 +79,26 @@ const todos = computed(() => {
 
     }
 });
+
+const tokenCopy = () => {
+    const jwtToken = getToken()
+
+    if (jwtToken) {
+        const tempInput = document.createElement('input');
+        tempInput.value = jwtToken;
+        document.body.appendChild(tempInput);
+
+        tempInput.select();
+        tempInput.setSelectionRange(0, 99999); // mobilní zařízení
+
+        navigator.clipboard.writeText(tempInput.value);
+        document.body.removeChild(tempInput);
+
+        $toast.success("JWT zkopírováno")
+    } else {
+        $toast.error('JWT nebylo nalezeno');
+    }
+}
 
 const addTodo = async () => {
     if (form.title.value.trim() !== '') {
