@@ -8,8 +8,13 @@ import Todo from "./todo-list/Todo.vue"
 
 
 <template>
-    <Nav ></Nav>
-    <Todo></Todo>
+    <Nav></Nav>
+    <Todo id="todolist"></Todo>
     <Footer></Footer>
 </template>
 
+<style scoped>
+#todolist {
+    padding-bottom: 20%;
+}
+</style>

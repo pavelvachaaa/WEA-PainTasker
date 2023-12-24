@@ -60,15 +60,27 @@ const todoModule = {
 
     getters: {
         allTodos(state) {
-            return state.todos
+            const sortedTodos = [...state.todos].sort((a, b) => {
+                if (a.isDone !== b.isDone) {
+                    return a.isDone ? 1 : -1;
+                } else {
+                    return new Date(b.updatedAt) - new Date(a.updatedAt);
+                }
+            });
+
+            return sortedTodos;
         },
 
         allTodosDone(state) {
-            return state.todos.filter(todo => todo.isDone)
+            return state.todos.filter(todo => todo.isDone).sort((a, b) => {
+                return new Date(b.updatedAt) - new Date(a.updatedAt);
+            });
         },
 
         allTodosNotDone(state) {
-            return state.todos.filter(todo => !todo.isDone)
+            return state.todos.filter(todo => !todo.isDone).sort((a, b) => {
+                return new Date(b.updatedAt) - new Date(a.updatedAt);
+            });
         }
 
     },

@@ -34,4 +34,8 @@ const deleteToken = () => {
     localStorage.removeItem("jwt");
 }
 
-export { isTokenValid, getUserFromToken, getToken, deleteToken };
+const isLoggedIn = () => {
+    return isTokenValid(getToken())
+}
+
+export { isTokenValid, getUserFromToken, getToken, deleteToken, isLoggedIn };

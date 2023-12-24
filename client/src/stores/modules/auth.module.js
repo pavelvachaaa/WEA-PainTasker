@@ -51,7 +51,7 @@ const authModule = {
             return state.user;
         },
         isLoggedIn(state) {
-            return Object.keys(state.user).length !== 0 && isTokenValid(getToken())
+            return isTokenValid(getToken())
         }
     }
 }

@@ -23,8 +23,8 @@ TodoSchema.pre<ITodo>('save', async function (next) {
     next();
 });
 
-TodoSchema.pre<ITodo>('updateOne', function (next) {
-    this.updateOne({}, { $set: { updatedAt: new Date() } }); 
+TodoSchema.pre<ITodo>('findOneAndUpdate', function (next) {
+    this.updateOne({}, { $set: { updatedAt: new Date() } });
     next();
 });
 

@@ -1,6 +1,5 @@
 import { Service } from "typedi";
 import CreateTodoDTO from "../dtos/create_todo.dto";
-import { IUser } from "../models/user.schema";
 import Todo, { ITodo } from "../models/todo.schema";
 import DeleteTodoDTO from "../dtos/delete_todo.dto";
 import UpdateTodoDTO from "../dtos/update_todo";
